@@ -15,6 +15,9 @@ class CreateJobContactsTable extends Migration
     {
         Schema::create('job_contacts', function (Blueprint $table) {
             $table->id();
+            $table->string('company_name');
+            $table->string('email');
+            $table->string('position');
             $table->timestamps();
         });
     }
