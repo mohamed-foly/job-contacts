@@ -111,8 +111,37 @@
 
         <main class="py-4">
             <div class="container">
+                <div class="">
+                    <div class="col-md-12">
+                        <div class="row">
+
+                        </div>
+                    </div>
+                </div>
                 <div class="row justify-content-center">
                     <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">{{__('Information')}}</div>
+            
+                            <div class="card-body">
+                                <div class="col-md-10">
+                                    <p>
+                                        <br>
+                                        This website acts as companies guide, thease companies searched or may search for specific position. <br><br>
+                                        If you know any company currently have open position feel free to add it, may helping some one ealse.<br>
+                                        By offering download, you can customize it as you need on excel or any similar.
+                                    </p>
+                                    <center>
+                                        @if(isset($jobs_count) && $jobs_count)
+                                         Current Jobs <p style="font-weight: bold;"> ({{$jobs_count}}) </p>
+                                        @endif
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-10">
                         <div class="card">
                             <div class="card-header">{{__('Add Job')}}</div>
             
@@ -123,32 +152,95 @@
                                     </div>
                                 @endif
                                 <form action="#" method="POST">
-                                    <div class="form-group row">
-                                        <label for="company_name" class="col-md-4 col-form-label text-md-right">{{ __('Company Name') }}</label>
-            
-                                        <div class="col-md-6">
-                                            <input id="company_name" type="text" class="form-control @error('company_name') is-invalid @enderror" name="company_name" value="{{ old('company_name') }}" required autocomplete="company_name" autofocus>
-        
-                                        </div>
-                                    </div>
+                                    @csrf
+                                    <div class="col-md-12">
 
-                                    <div class="form-group row">
-                                        <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-            
-                                        <div class="col-md-6">
-                                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-            
-                                            @error('email')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
+                                        <div class="form-group row">
+                                            <label for="company_name" class="col-md-4 col-form-label text-md-right">{{ __('Company Name') }}</label>
+                                            <div>
+                                                <input id="company_name" type="company_name" class="form-control @error('company_name') is-invalid @enderror" name="company_name" value="{{ old('company_name') }}" required autocomplete="company_name" autofocus>
+                
+                                                @error('company_name')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
                                         </div>
+
+
+                                        <div class="form-group row">
+                                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                                            <div>
+                                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                
+                                                @error('email')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="position" class="col-md-4 col-form-label text-md-right">{{ __('Position') }}</label>
+                                            <div>
+                                                <input id="position" type="position" class="form-control @error('position') is-invalid @enderror" name="position" value="{{ old('position') }}" required autocomplete="position" autofocus>
+                
+                                                @error('position')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <button type="submit" class="btn btn-primary">
                                         {{ __('Add') }}
                                     </button>     
                                 </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+
+                    <div class="col-md-11">
+                        <div class="card">
+                            <div class="card-header">{{__('Actions')}}</div>
+            
+                            <div class="card-body">
+                                
+                                
+                                <a href="{{route('export')}}"><button class="btn btn-success" >Download</button></a>
+                                <hr>
+                                <h3 class="card-title">@include('common.perpage')</h3>
+                                <table class="table table-hover"> 
+                                    <thead>
+                                        <th>Company Name</th>
+                                        <th>E-Mail Address</th>
+                                        <th>Position</th>
+                                        <th>Created At</th>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($jobs as $job)
+                                            <tr>
+                                                <td>{{ $job->company_name }}</td>
+                                                <td>{{ $job->email }}</td>
+                                                <td>{{ $job->position }}</td>
+                                                <td>{{ $job->created_at }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+
+                                <div class="card-footer clearfix">
+                                    <ul class="pagination pagination-sm m-0 float-right">
+                                        <div class="row">
+                                            {!! $jobs->render() !!}
+                                        </div>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
